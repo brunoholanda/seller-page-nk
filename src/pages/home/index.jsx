@@ -5,14 +5,29 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 
+import image1 from '../../assets/products/R36S/1.webp';
+import image2 from '../../assets/products/R36S/2.webp';
+import image3 from '../../assets/products/R36S/3.webp';
+
+import {
+  StyledContainer,
+  StyledRow,
+  StyledCol,
+  ProductImage,
+  ProductTitle,
+  ProductDescription,
+  ProductPrice,
+  BuyButton
+} from './styles'; // Ajuste o caminho de importação conforme necessário
+
 export default function HomePage() {
   const product = {
-    title: 'Produto Exemplo',
-    description: 'Descrição do produto...',
+    title: 'O melhor VideoGame Retro Portatil !',
+    description: 'Relembre os jogos que marcaram uma geracao inteira',
     images: [
-      'https://ae01.alicdn.com/kf/Ae6e62f6b30d44d9fa52e1edd0379b375P.jpg',
-      'https://ae01.alicdn.com/kf/Sebb8d94c4d1747dfad05a6b5073bdbc0J.jpg',
-      'https://ae01.alicdn.com/kf/S4df66b6aea8746cfba466568cea7269eH.jpg',
+      image1,
+      image2,
+      image3,
     ],
     price: 499.99,
   };
@@ -26,9 +41,10 @@ export default function HomePage() {
   };
 
   return (
-    <Container>
-      <Row>
-        <Col xs={12} md={6}>
+    <StyledContainer>
+      <StyledRow>
+        <h1>{product.title}</h1>
+        <StyledCol xs={12} md={6}>
           <Slider {...sliderSettings}>
             {product.images.map((image, index) => (
               <div key={index}>
@@ -36,15 +52,14 @@ export default function HomePage() {
               </div>
             ))}
           </Slider>
-        </Col>
-        <Col xs={12} md={6}>
-          <h1>{product.title}</h1>
-          <p>{product.description}</p>
-          <p>Preço: R$ {product.price}</p>
-          <Button variant="primary">Comprar</Button>
-        </Col>
-      </Row>
-    </Container>
+        </StyledCol>
+        </StyledRow>
+        <StyledRow xs={12} md={6}>
+          <ProductDescription>{product.description}</ProductDescription>
+          <ProductPrice>Por Apenas: R$ {product.price}</ProductPrice>
+          <BuyButton variant="primary">Comprar Agora !</BuyButton>
+        </StyledRow>
+    </StyledContainer>
   );
 }
 
