@@ -1,11 +1,15 @@
+import { ProdutoProvider } from 'components/Context/ProdutoContext';
+import CardProduto from 'components/Cards/Card';
+import PageBody from 'components/PageBody';
+import Cadastro from 'pages/Cadastro';
+import HomePage from 'pages/home';
 import React, { useEffect } from 'react';
 import { Route, Routes, HashRouter, useLocation } from 'react-router-dom';
 
-import HomePage from './pages/home'
 
 function AppRoutes() {
 
- function ScrollToTop() {
+  function ScrollToTop() {
     const { pathname } = useLocation();
 
     useEffect(() => {
@@ -23,9 +27,15 @@ function AppRoutes() {
   return (
     <HashRouter>
       <ScrollToTop />
+      <ProdutoProvider>
       <Routes>
+        <Route path="/" element={<PageBody />}>
           <Route index element={<HomePage />} />
+          <Route path="/" element={<CardProduto />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+        </Route>
       </Routes>
+      </ProdutoProvider>
     </HashRouter>
   );
 }
