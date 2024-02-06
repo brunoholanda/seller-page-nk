@@ -5,6 +5,7 @@ import Cadastro from 'pages/Cadastro';
 import HomePage from 'pages/home';
 import React, { useEffect } from 'react';
 import { Route, Routes, HashRouter, useLocation } from 'react-router-dom';
+import Pagamento from 'pages/Pagamento';
 
 
 function AppRoutes() {
@@ -33,6 +34,7 @@ function AppRoutes() {
           <Route index element={<HomePage />} />
           <Route path="/" element={<CardProduto />} />
           <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/pagamento" element={<Pagamento />} />
         </Route>
       </Routes>
       </ProdutoProvider>

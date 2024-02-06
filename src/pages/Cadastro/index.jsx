@@ -1,23 +1,66 @@
 // Cadastro.js
-import React, { useState } from 'react';
+import React from 'react';
 import { Form, Row, Col } from 'antd';
-import { StyledForm, StyledInput, StyledButton } from './styles'; // Ajuste o caminho conforme necessário
+import { StyledForm, StyledInput, StyledButton, CadastroPage } from './styles'; // Ajuste o caminho conforme necessário
 import { useProduto } from 'components/Context/ProdutoContext';
+import { useNavigate } from 'react-router-dom';
 
-const FormItem = Form.Item;
-
-// Estilos personalizados usando Styled Components
 const Cadastro = () => {
     const [form] = Form.useForm();
     const { produto } = useProduto();
+    const navigate = useNavigate();
+
 
     if (!produto) {
-      return <p>Produto não selecionado</p>; // ou redirecione para uma página de erro ou lista de produtos
+        return <p>Produto não selecionado</p>;
     }
-    const handleSubmit = (values) => {
-        console.log('Received values of form: ', values);
-        // Implemente a lógica de envio aqui
+    const handleSubmit = async (values) => {
+        console.log('Form Submit', values);
+
+        const payload = {
+            ...values,
+            produtoNome: produto.nome,
+            produtoPreco: produto.preco,
+        };
+
+        try {
+            const clienteResponse = await fetch('http://127.0.0.1:3333/clientes', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (clienteResponse.ok) {
+                const clienteData = await clienteResponse.json();
+                
+                const pedidoPayload = {
+                    cliente_id: clienteData.id,
+                    nome_produto: produto.nome,
+                    valor: produto.preco,
+                };
+
+                const pedidoResponse = await fetch('http://127.0.0.1:3333/pedidos', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(pedidoPayload),
+                });
+                if (pedidoResponse.ok) {
+                    navigate('/pagamento');
+                } else {
+                    console.error('Erro ao criar pedido');
+                }
+            } else {
+                console.error('Erro ao cadastrar cliente');
+            }
+        } catch (error) {
+            console.error('Erro ao enviar dados para o backend:', error);
+        }
     };
+
 
     const buscarCep = async (cep) => {
         if (cep.replace(/\D/g, '').length !== 8) {
@@ -54,7 +97,6 @@ const Cadastro = () => {
             <div>
                 <h1>Cadastro para Compra</h1>
                 <p>Produto selecionado: {produto.nome} - R$ {produto.preco}</p>
-                {/* Formulário de cadastro aqui */}
             </div>
 
             <StyledForm form={form} onFinish={handleSubmit} layout="vertical">
@@ -110,11 +152,10 @@ const Cadastro = () => {
                         </StyledForm.Item>
                     </Col>
                 </Row>
-                <StyledForm.Item>
-                    <StyledButton type="primary" htmlType="submit">
-                        Cadastrar
-                    </StyledButton>
-                </StyledForm.Item>
+
+                <StyledButton type="primary" htmlType="submit">
+                Prossegiur para Pagamento
+            </StyledButton>
             </StyledForm>
         </>
     );

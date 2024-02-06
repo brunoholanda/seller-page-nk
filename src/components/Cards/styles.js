@@ -29,8 +29,8 @@ export const CardText = styled.p`
 export const BuyButton = styled.a`
   display: inline-block;
   color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+  background-color: var(--azul); 
+  border: none;
   padding: 0.375rem 0.75rem;
   font-size: 1rem;
   line-height: 1.5;

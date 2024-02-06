@@ -1,6 +1,11 @@
 import styled from 'styled-components';
 import { Form, Button, Input } from 'antd';
 
+export const CadastroPage = styled(Form)`
+  margin: .5rem 1rem;
+  text-align: center;
+`;
+
 export const StyledForm = styled(Form)`
   max-width: 600px;
   margin: auto;
@@ -16,9 +21,13 @@ export const StyledInput = styled(Input)`
 `;
 
 export const StyledButton = styled(Button)`
+  width: 100%;
+  height: 40px;
+
   &.ant-btn-primary {
-    background-color: #004d40; 
-    border-color: #004d40; 
+    background-color: var(--azul); 
+    border: none;
+    font-size: 16px;
     
     &:hover, &:focus {
       background-color: #00332a; 
