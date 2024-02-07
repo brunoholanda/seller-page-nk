@@ -4,11 +4,19 @@ import { Form, Row, Col } from 'antd';
 import { StyledForm, StyledInput, StyledButton, CadastroPage } from './styles'; // Ajuste o caminho conforme necessário
 import { useProduto } from 'components/Context/ProdutoContext';
 import { useNavigate } from 'react-router-dom';
+import Checkout from 'components/Checkout';
+import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 
 const Cadastro = () => {
     const [form] = Form.useForm();
     const { produto } = useProduto();
     const navigate = useNavigate();
+
+    const initialOptions = {
+        "client-id": "AZ9gy1sEspvcJhUawtOQYSSx8YTGYUCkpQxcXxIyq7so5bJ5D24qYsdm0v7zK66fH3OwTYTKeldX2FRL",
+        currency: "BRL",
+        intent: "capture",
+    };
 
 
     if (!produto) {
@@ -34,7 +42,7 @@ const Cadastro = () => {
 
             if (clienteResponse.ok) {
                 const clienteData = await clienteResponse.json();
-                
+
                 const pedidoPayload = {
                     cliente_id: clienteData.id,
                     nome_produto: produto.nome,
@@ -154,9 +162,13 @@ const Cadastro = () => {
                 </Row>
 
                 <StyledButton type="primary" htmlType="submit">
-                Prossegiur para Pagamento
-            </StyledButton>
+                    Prossegiur para Pagamento
+                </StyledButton>
+     
             </StyledForm>
+            <PayPalScriptProvider options={initialOptions}>
+                    <Checkout />
+                </PayPalScriptProvider>
         </>
     );
 };
