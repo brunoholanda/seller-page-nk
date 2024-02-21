@@ -1,52 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, CardImage, CardBody, CardTitle, CardText, BuyButton } from '../styles';
 import { useProduto } from 'components/Context/ProdutoContext';
-import { PayPalButtons, PayPalScriptProvider, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-
 
 const CardProduto = ({ produto }) => {
   const { setProduto } = useProduto();
-  const [{ options }, dispatch] = usePayPalScriptReducer();
 
-  // Atualiza as opções do PayPal Script para usar a moeda do produto
-  const updateCurrency = (currency) => {
-    dispatch({
-      type: "resetOptions",
-      value: {
-        ...options,
-        currency: currency,
-      },
-    });
+  const loadMercadoPagoSDK = () => {
+    const script = document.createElement('script');
+    script.src = "https://sdk.mercadopago.com/js/v2";
+    script.async = true;
+    document.body.appendChild(script);
+
+    script.onload = () => {
+      initMercadoPago();
+    };
   };
 
-  const onCreateOrder = (data, actions) => {
-    return actions.order.create({
-      purchase_units: [{
-        amount: {
-          currency_code: produto.moeda || 'BRL', // Use a moeda do produto ou 'BRL' como padrão
-          value: produto.preco, // Preço do produto
-        },
-        description: produto.nome, // Nome do produto
-      }]
-    });
-  };
-
-  const onApproveOrder = (data, actions) => {
-    return actions.order.capture().then((details) => {
-      const name = details.payer.name.given_name;
-      alert(`Transação concluída por ${name}`);
-      // Aqui você pode adicionar lógica adicional pós-aprovação, como redirecionamento ou atualização de estado
-    });
-  };
-
-  // Atualizar a moeda quando o componente é montado ou quando a moeda do produto muda
-  React.useEffect(() => {
-    if (produto.moeda) {
-      updateCurrency(produto.moeda);
+  const initMercadoPago = () => {
+    if (!window.MercadoPago) {
+      console.error('SDK do MercadoPago não está carregado.');
+      return;
     }
-  }, [produto.moeda]);
 
+    const mp = new window.MercadoPago('TEST-0f4f4060-a4af-4549-a662-3a7528d5e6eb', { locale: 'pt-BR' });
+
+    fetch('http://127.0.0.1:3333/create_preference', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ itemDetails: { 
+        title: produto.nome,
+        description: produto.descricao,
+        unit_price: produto.preco
+      }}),
+    })
+    .then(response => response.json())
+    .then(data => {
+      mp.checkout({
+        preference: {
+          id: data.id 
+        },
+        autoOpen: true, 
+      });
+    })
+    .catch(error => console.error('Erro ao criar a preferência de pagamento:', error));
+  };
+
+  // Use useEffect para carregar o SDK quando o componente for montado
+  useEffect(() => {
+    loadMercadoPagoSDK();
+  }, []);
 
   return (
     <Card>
@@ -55,18 +60,12 @@ const CardProduto = ({ produto }) => {
         <CardTitle>{produto.nome}</CardTitle>
         <CardText>{produto.descricao}</CardText>
         <CardText>R$ {produto.preco}</CardText>
-        <div>
-
-          <PayPalButtons
-            style={{ layout: "vertical" }}
-            createOrder={(data, actions) => onCreateOrder(data, actions)}
-            onApprove={(data, actions) => onApproveOrder(data, actions)}
-          />
+        <div className="buy-button">
+          <button onClick={initMercadoPago}>Pagar com MercadoPago</button>
         </div>
-
       </CardBody>
     </Card>
   );
-
 }
+
 export default CardProduto;

@@ -7,6 +7,7 @@ import React, { useEffect } from 'react';
 import { Route, Routes, HashRouter, useLocation } from 'react-router-dom';
 import Pagamento from 'pages/Pagamento';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
+import Checkout from 'components/Checkout';
 
 
 function AppRoutes() {
@@ -28,10 +29,11 @@ function AppRoutes() {
 
 
   const initialOptions = {
-    "client-id": "AZ9gy1sEspvcJhUawtOQYSSx8YTGYUCkpQxcXxIyq7so5bJ5D24qYsdm0v7zK66fH3OwTYTKeldX2FRL",
+    "client-id": "AcR5ozJ0sDkZ8sNUNUnlrOt2PfER_S1FogTUUFsUtmujE1rNKnsY8gOhDOrm4eyPKpSwWpT3GKQgd9ep",
     currency: "BRL",
     intent: "capture",
   };
+  
   return (
     <HashRouter>
       <ScrollToTop />
@@ -43,6 +45,7 @@ function AppRoutes() {
               <Route path="/" element={<CardProduto />} />
               <Route path="/cadastro" element={<Cadastro />} />
               <Route path="/pagamento" element={<Pagamento />} />
+              <Route path="/checkout" element={<Checkout />} />
             </Route>
           </Routes>
         </ProdutoProvider>
