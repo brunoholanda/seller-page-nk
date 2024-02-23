@@ -26,4 +26,10 @@ export const StyledBanner = styled.div`
     z-index: 2;
     margin: 0 1.8rem;
   }
+
+  @media (min-width: 768px) {
+    p {
+      font-size: 38px;
+    }
+  }
 `;

@@ -12,8 +12,13 @@ export const StyledContainer = styled(Container)`
     margin: 2rem;
     font-size: 25px;
     color: #666;
+  }
+
+  @media (min-width: 768px) {
+    margin: 1rem 4rem;
 
   }
+
 `;
 
 export const StyledRowBack = styled(Row)`
@@ -27,21 +32,37 @@ export const StyledRowBack = styled(Row)`
   p {
     font-weight: bold;
     margin: 0;
+    color: var(--cinza-texto);
   }
 `;
 
 export const StyledRow = styled(Row)`
     flex-direction: row;
     justify-content: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
+    
+    h1 {
+      font-size: 1.25rem;
+      margin-bottom: .5rem;
+    }
 
+    @media (min-width: 768px) {
+      h1 {
+        text-align: left;
+
+      }
+  }
 `;
 
 export const StyledRowDescription = styled(Row)`
     flex-direction: row;
     justify-content: center;
-  margin: 0 2rem 2rem 2rem;
+    margin: 0 2rem 2rem 2rem;
 
+  @media (min-width: 768px) {
+    justify-content: left;
+    text-align: left;
+  }
 `;
 
 export const StyledCol = styled(Col)`
@@ -51,6 +72,16 @@ export const StyledCol = styled(Col)`
     img {
         width: 320px;
         height: 320px;
+    }
+
+    @media (min-width: 768px) {
+      text-align: center;
+      margin: 0 2rem;
+
+    img {
+        width: 550px;
+        height: 550px;
+    }
     }
 `;
 
@@ -104,6 +135,11 @@ export const StyledButton = styled.button`
     width: 35px;
     margin: 0 0 0 .5rem;
   }
+
+  @media (min-width: 768px) {
+    width: 50%;
+    
+  }
 `;
 
 
@@ -133,6 +169,16 @@ li::before {
     position: absolute;
     left: 0; 
     top: 0; 
+}
+
+@media (min-width: 768px) {
+  margin: 0 4rem 4rem 4rem;
+  font-size: 18px;
+
+  h3 {
+    text-align: left;
+  }
+
 }
 
 `;

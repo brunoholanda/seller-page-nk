@@ -23,7 +23,17 @@ import {
   StyledRowBack,
   MarkdownContainer
 } from './styles';
-import { CaretLeftOutlined } from '@ant-design/icons';
+import { CaretLeftOutlined, CaretRightOutlined } from '@ant-design/icons';
+
+function NextArrow(props) {
+  const { onClick } = props;
+  return <CaretRightOutlined className="slick-next" onClick={onClick} style={{ color: '#0286e7', fontSize: '25px', cursor: 'pointer', zIndex: 20 }} />;
+}
+
+function PrevArrow(props) {
+  const { onClick } = props;
+  return <CaretLeftOutlined className="slick-prev" onClick={onClick} style={{ color: '#0286e7', fontSize: '25px', cursor: 'pointer', zIndex: 20 }} />;
+}
 
 export default function ProductDetails() {
   const { id } = useParams();
@@ -42,13 +52,18 @@ export default function ProductDetails() {
   if (!produto) {
     return <div>Produto não encontrado</div>;
   }
+  
 
   const sliderSettings = {
     dots: true,
     infinite: true,
+    fade: true,
     speed: 500,
     slidesToShow: 1,
     slidesToScroll: 1,
+    waitForAnimate: false,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />,
   };
 
   const loadMercadoPagoSDK = () => {
@@ -133,7 +148,6 @@ export default function ProductDetails() {
         <ProductDescription>{produto.descricao}</ProductDescription>
         <ProductPrice>Por Apenas: R$ {produto.preco},00</ProductPrice>
         <StyledButton variant="primary" onClick={initMercadoPago}>Compre com MercadoPago <img src={mp} alt="icone mercadopago" /></StyledButton>
-
       </StyledRowDescription>
       <MarkdownContainer>
         <ReactMarkdown>{produto.detalhe.replace(/\\n/g, '\n')}</ReactMarkdown>

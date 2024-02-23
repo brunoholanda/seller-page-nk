@@ -5,6 +5,11 @@ export const Card = styled.div`
   width: 100%;
   margin: 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  @media (min-width: 768px) {
+    width: 330px;
+    height: 690px;
+  }
 `;
 
 export const CardImage = styled.img`
