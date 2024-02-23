@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { useSwipeable } from "react-swipeable";
 import { Outlet } from "react-router-dom";
-import { StyledHeader, MenuIcon, StyledNav, MenuBar, MenuText, CloseIcon, StyledLink, StyledFooter } from './styles'; 
-
+import { StyledHeader, MenuIcon, StyledNav, MenuBar, MenuText, CloseIcon, StyledLink, StyledFooter, StyledHighHeader, StyledLogo } from './styles';
+import { LinkedinOutlined,  RadiusSettingOutlined, TwitterOutlined, YoutubeOutlined } from '@ant-design/icons';
+import logo from '../../assets/logo.png';
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -28,11 +29,23 @@ const Header = () => {
   );
 };
 
+const HighHeader = () => {
+  return (
+    <StyledHighHeader>
+      <a href="https://www.linkedin.com/in/brunoholanda/" target="_blank" rel="noopener" style={{ color: 'white', margin: '0 10px' }}><LinkedinOutlined /></a>
+      <a href="https://twitter.com/NerdkingT" target="_blank" rel="noopener" style={{ color: 'white', margin: '0 10px' }}><TwitterOutlined /></a>
+      <a href="https://www.youtube.com/user/nerdkingteam" target="_blank" rel="noopener" style={{ color: 'white', margin: '0 10px' }}><YoutubeOutlined /></a>
+      <a href="https://nerdking.net.br/" target="_blank" rel="noopener" style={{ color: 'white', margin: '0 10px' }}><RadiusSettingOutlined /></a>
+    </StyledHighHeader>
+
+  )
+}
+
 const Footer = () => {
   return (
     <StyledFooter>
-      <p>Contato: contato@nossaloja.com</p>
-      <p>&copy; {new Date().getFullYear()} Nossa Loja. Todos os direitos reservados.</p>
+      <p>holandasoftware@gmail.com</p>
+      <p>&copy; {new Date().getFullYear()} Bruno Holanda. Todos os direitos reservados.</p>
     </StyledFooter>
   );
 };
@@ -40,6 +53,10 @@ const Footer = () => {
 export default function PageBody() {
   return (
     <>
+      <HighHeader />
+      <StyledLogo>
+        <img src={logo} alt="logo da loja nerdking" />
+      </StyledLogo>
       <Header />
       <Outlet />
       <Footer />

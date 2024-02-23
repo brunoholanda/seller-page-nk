@@ -8,6 +8,7 @@ import { Route, Routes, HashRouter, useLocation } from 'react-router-dom';
 import Pagamento from 'pages/Pagamento';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
 import Checkout from 'components/Checkout';
+import ProductDetails from 'pages/ProductDetails';
 
 
 function AppRoutes() {
@@ -46,6 +47,7 @@ function AppRoutes() {
               <Route path="/cadastro" element={<Cadastro />} />
               <Route path="/pagamento" element={<Pagamento />} />
               <Route path="/checkout" element={<Checkout />} />
+              <Route path="/product-details/:id"  element={<ProductDetails />} />
             </Route>
           </Routes>
         </ProdutoProvider>

@@ -16,10 +16,32 @@ export const StyledContainer = styled(Container)`
   }
 `;
 
+export const StyledRowBack = styled(Row)`
+    flex-direction: row;
+    display: flex;
+    justify-content: flex-start;
+    margin: 1rem 0 0 1.5rem;
+    align-items: center;
+    cursor: pointer;
+
+  p {
+    font-weight: bold;
+    margin: 0;
+  }
+`;
+
 export const StyledRow = styled(Row)`
     flex-direction: row;
     justify-content: center;
     margin-bottom: 2rem;
+
+`;
+
+export const StyledRowDescription = styled(Row)`
+    flex-direction: row;
+    justify-content: center;
+  margin: 0 2rem 2rem 2rem;
+
 `;
 
 export const StyledCol = styled(Col)`
@@ -50,26 +72,67 @@ export const ProductDescription = styled.p`
 `;
 
 export const ProductPrice = styled.p`
-  font-size: 1.5em;
+  font-size: 1.3em;
   font-weight: bold;
-  color: #000;
+  color: var(--cinza-texto);
 `;
 
-export const BuyButton = styled(Button)`
-    background-color: var(--azul);
-    color: var(--branco);
-    font-family: var(--fonte-secundaria);
-    font-weight: 500;
-    width: 250px;
-    height: 40px;
-    margin-bottom: 1rem;
-    border-radius: 8px;
-    border: none;
-    font-size: 20px;
 
+export const StyledButton = styled.button`
+  display: inline-block;
+  color: #fff;
+  background-color: var(--azul); 
+  border: none;
+  padding: 0.575rem 1rem;
+  width: 100%;
+  font-size: 1rem;
+  line-height: 1.5;
+  border-radius: 0.25rem;
+  text-decoration: none;
+  cursor: pointer;
+  margin: 0 0 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   &:hover {
     background-color: #0056b3;
     border-color: #0056b3;
   }
+
+  img {
+    width: 35px;
+    margin: 0 0 0 .5rem;
+  }
+`;
+
+
+export const MarkdownContainer = styled.p`
+  text-align: left;
+  margin: 0 1.5rem;
+  color: var(--cinza-texto);
+
+  h3 {
+    text-align: center;
+  }
+
+  ul {
+    margin-block-start: 0;
+    margin-block-end: 0;
+    padding-inline-start: 0;
+  }
+
+  li {
+    position: relative; 
+    padding-left: 25px; 
+    list-style: none;
+}
+
+li::before {
+    content: '✔'; 
+    position: absolute;
+    left: 0; 
+    top: 0; 
+}
+
 `;
